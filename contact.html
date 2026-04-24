@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Follow Spark order confirmation form." />
+  <title>Contact | Follow Spark</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #070a12;
+      --card: rgba(255, 255, 255, 0.07);
+      --text: #ffffff;
+      --muted: #a7b0c0;
+      --muted-2: #778197;
+      --line: rgba(255, 255, 255, 0.13);
+      --cyan: #67e8f9;
+      --blue: #6366f1;
+      --green: #86efac;
+      --danger: #fb7185;
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      background:
+        radial-gradient(circle at 12% 10%, rgba(103, 232, 249, 0.22), transparent 30%),
+        radial-gradient(circle at 88% 22%, rgba(99, 102, 241, 0.22), transparent 32%),
+        radial-gradient(circle at 50% 95%, rgba(217, 70, 239, 0.16), transparent 32%),
+        #070a12;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background-image:
+        linear-gradient(to right, rgba(255, 255, 255, 0.055) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.055) 1px, transparent 1px);
+      background-size: 72px 72px;
+      mask-image: radial-gradient(ellipse at top, black 22%, transparent 72%);
+      pointer-events: none;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      width: min(100% - 24px, 1080px);
+      min-height: 100vh;
+      margin: 0 auto;
+      padding: 22px 0 42px;
+      display: grid;
+      align-items: center;
+    }
+
+    .back-btn {
+      position: fixed;
+      top: 18px;
+      left: 18px;
+      z-index: 10;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.07);
+      color: #e5edf8;
+      font-size: 14px;
+      font-weight: 900;
+      backdrop-filter: blur(18px);
+      box-shadow: 0 18px 55px rgba(0, 0, 0, 0.24);
+      transition: 0.25s ease;
+    }
+
+    .back-btn:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.11);
+    }
+
+    .contact-shell {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      align-items: center;
+      margin-top: 70px;
+    }
+
+    .intro-card,
+    .form-card,
+    .success-card {
+      border: 1px solid var(--line);
+      border-radius: 32px;
+      background: var(--card);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(22px);
+    }
+
+    .intro-card {
+      position: relative;
+      overflow: hidden;
+      padding: 32px;
+    }
+
+    .intro-card::before {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      right: -70px;
+      top: -70px;
+      border-radius: 50%;
+      background: rgba(103, 232, 249, 0.18);
+      filter: blur(35px);
+    }
+
+    .badge {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 15px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      color: #d8dfeb;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--cyan), var(--blue));
+      box-shadow: 0 0 22px rgba(103, 232, 249, 0.75);
+    }
+
+    h1 {
+      position: relative;
+      margin-top: 20px;
+      font-size: clamp(34px, 9vw, 62px);
+      line-height: 1.04;
+      letter-spacing: -0.06em;
+      font-weight: 900;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #fff 8%, var(--cyan), #a5b4fc 75%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .intro-card p {
+      position: relative;
+      margin-top: 18px;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 16px;
+    }
+
+    .mini-steps {
+      position: relative;
+      display: grid;
+      gap: 12px;
+      margin-top: 26px;
+    }
+
+    .mini-step {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.045);
+      color: #d9e3f2;
+      font-weight: 800;
+    }
+
+    .mini-step span {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 28px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--cyan), var(--blue));
+      color: #fff;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .form-card {
+      padding: 24px;
+    }
+
+    .form-title {
+      margin-bottom: 22px;
+    }
+
+    .form-title h2 {
+      font-size: 28px;
+      letter-spacing: -0.04em;
+      font-weight: 900;
+    }
+
+    .form-title p {
+      margin-top: 8px;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    .form-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    label {
+      color: #d9e3f2;
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    input,
+    select {
+      width: 100%;
+      min-height: 54px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      outline: none;
+      background: rgba(255, 255, 255, 0.06);
+      color: #fff;
+      padding: 0 16px;
+      font: inherit;
+      font-weight: 700;
+      transition: 0.25s ease;
+    }
+
+    select option {
+      color: #0a1020;
+    }
+
+    input::placeholder {
+      color: #738096;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: rgba(103, 232, 249, 0.6);
+      box-shadow: 0 0 0 4px rgba(103, 232, 249, 0.1);
+      background: rgba(255, 255, 255, 0.085);
+    }
+
+    .error {
+      display: none;
+      color: var(--danger);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .field.invalid .error {
+      display: block;
+    }
+
+    .field.invalid input,
+    .field.invalid select {
+      border-color: rgba(251, 113, 133, 0.75);
+    }
+
+    .send-btn {
+      width: 100%;
+      min-height: 58px;
+      margin-top: 8px;
+      border: 0;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--cyan), var(--blue));
+      color: #fff;
+      font: inherit;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 18px 60px rgba(103, 232, 249, 0.18);
+      transition: 0.25s ease;
+    }
+
+    .send-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .send-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .note {
+      margin-top: 14px;
+      color: var(--muted-2);
+      font-size: 13px;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    .success-card {
+      display: none;
+      padding: 30px;
+      text-align: center;
+    }
+
+    .success-card.show {
+      display: block;
+      animation: fadeUp 0.45s ease both;
+    }
+
+    .success-icon {
+      width: 72px;
+      height: 72px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 18px;
+      border-radius: 50%;
+      background: rgba(134, 239, 172, 0.13);
+      color: var(--green);
+      border: 1px solid rgba(134, 239, 172, 0.35);
+      font-size: 34px;
+      font-weight: 900;
+    }
+
+    .success-card h2 {
+      font-size: 30px;
+      letter-spacing: -0.04em;
+      font-weight: 900;
+    }
+
+    .success-card p {
+      margin: 12px auto 0;
+      max-width: 520px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .success-details {
+      margin-top: 22px;
+      display: grid;
+      gap: 10px;
+      text-align: left;
+    }
+
+    .success-details div {
+      padding: 13px 15px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.045);
+      color: #dce6f5;
+      font-weight: 800;
+      line-height: 1.5;
+    }
+
+    .success-details span {
+      color: var(--cyan);
+    }
+
+    .success-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .action-btn {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 52px;
+      padding: 13px 22px;
+      border-radius: 999px;
+      font-weight: 900;
+      transition: 0.25s ease;
+    }
+
+    .action-primary {
+      background: #fff;
+      color: #071018;
+    }
+
+    .action-ghost {
+      border: 1px solid var(--line);
+      color: #fff;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .action-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (min-width: 760px) {
+      .page {
+        width: min(100% - 48px, 1080px);
+      }
+
+      .form-card {
+        padding: 32px;
+      }
+
+      .form-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .field.full {
+        grid-column: span 2;
+      }
+
+      .success-actions {
+        flex-direction: row;
+        justify-content: center;
+      }
+    }
+
+    @media (min-width: 1025px) {
+      .contact-shell {
+        grid-template-columns: 0.95fr 1.05fr;
+        gap: 28px;
+        margin-top: 0;
+      }
+
+      .intro-card {
+        padding: 42px;
+      }
+
+      .form-card {
+        padding: 34px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="back-btn" href="index.html">← Back to Home</a>
+
+  <main class="page">
+    <section class="contact-shell">
+      <div class="intro-card">
+        <span class="badge">
+          <span class="dot"></span>
+          Follow Spark Order
+        </span>
+
+        <h1>
+          Confirm your
+          <span class="gradient-text">growth request.</span>
+        </h1>
+
+        <p>
+          Enter your details carefully. Your selected plan will be filled automatically when you come from the pricing page.
+        </p>
+
+        <div class="mini-steps">
+          <div class="mini-step"><span>1</span> Select your plan</div>
+          <div class="mini-step"><span>2</span> Enter your details</div>
+          <div class="mini-step"><span>3</span> Submit request</div>
+          <div class="mini-step"><span>4</span> Our team contacts you</div>
+        </div>
+      </div>
+
+      <div>
+        <form
+          class="form-card"
+          id="orderForm"
+          action="https://formspree.io/f/mojyrale"
+          method="POST"
+        >
+          <div class="form-title">
+            <h2>Order Details</h2>
+            <p>Fill the form below to confirm your request.</p>
+          </div>
+
+          <div class="form-grid">
+            <div class="field" id="nameField">
+              <label for="fullName">Your Name</label>
+              <input id="fullName" name="Name" type="text" placeholder="Enter your full name" />
+              <div class="error">Please enter your name.</div>
+            </div>
+
+            <div class="field" id="phoneField">
+              <label for="phone">Phone Number</label>
+              <input id="phone" name="Phone Number" type="tel" placeholder="Enter your phone number" />
+              <div class="error">Please enter a valid phone number.</div>
+            </div>
+
+            <div class="field" id="gmailField">
+              <label for="gmail">Gmail</label>
+              <input id="gmail" name="Gmail" type="email" placeholder="example@gmail.com" />
+              <div class="error">Please enter a valid Gmail address.</div>
+            </div>
+
+            <div class="field" id="instaField">
+              <label for="instagram">Instagram Username</label>
+              <input id="instagram" name="Instagram Username" type="text" placeholder="@yourusername" />
+              <div class="error">Please enter your Instagram username.</div>
+            </div>
+
+            <div class="field full" id="planField">
+              <label for="plan">Selected Plan</label>
+              <select id="plan" name="Selected Plan">
+                <option value="">Select a plan</option>
+                <option value="Starter">Starter - ₹99</option>
+                <option value="Growth">Growth - ₹499</option>
+                <option value="Scale">Scale - ₹999</option>
+              </select>
+              <div class="error">Please select your plan.</div>
+            </div>
+          </div>
+
+          <button class="send-btn" type="submit">Send Request</button>
+
+          <p class="note">
+            After submitting, our team will review your request and contact you with the next steps.
+          </p>
+        </form>
+
+        <div class="success-card" id="successCard">
+          <div class="success-icon">✓</div>
+
+          <h2>Your order is confirmed.</h2>
+
+          <p>
+            Thank you for choosing Follow Spark. Your selected growth request has been received. Our team will contact you soon and guide you through the next process.
+          </p>
+
+          <div class="success-details">
+            <div><span>Name:</span> <b id="confirmName">-</b></div>
+            <div><span>Instagram:</span> <b id="confirmInstagram">-</b></div>
+            <div><span>Plan:</span> <b id="confirmPlan">-</b></div>
+          </div>
+
+          <div class="success-actions">
+            <a class="action-btn action-primary" href="index.html">Back to Home</a>
+            <a class="action-btn action-ghost" href="pricing.html">View Plans</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const selectedPlan = params.get("plan");
+
+    const orderForm = document.getElementById("orderForm");
+    const successCard = document.getElementById("successCard");
+
+    const fullName = document.getElementById("fullName");
+    const phone = document.getElementById("phone");
+    const gmail = document.getElementById("gmail");
+    const instagram = document.getElementById("instagram");
+    const plan = document.getElementById("plan");
+
+    const confirmName = document.getElementById("confirmName");
+    const confirmInstagram = document.getElementById("confirmInstagram");
+    const confirmPlan = document.getElementById("confirmPlan");
+
+    const fields = {
+      name: document.getElementById("nameField"),
+      phone: document.getElementById("phoneField"),
+      gmail: document.getElementById("gmailField"),
+      instagram: document.getElementById("instaField"),
+      plan: document.getElementById("planField"),
+    };
+
+    if (selectedPlan) {
+      const cleanPlan = selectedPlan.trim();
+
+      [...plan.options].forEach((option) => {
+        if (option.value.toLowerCase() === cleanPlan.toLowerCase()) {
+          plan.value = option.value;
+        }
+      });
+    }
+
+    function setInvalid(field, invalid) {
+      if (invalid) {
+        field.classList.add("invalid");
+      } else {
+        field.classList.remove("invalid");
+      }
+    }
+
+    function validateForm() {
+      const nameValid = fullName.value.trim().length >= 2;
+      const phoneValid = /^[0-9+\-\s]{8,15}$/.test(phone.value.trim());
+      const gmailValid = /^[^\s@]+@gmail\.com$/i.test(gmail.value.trim());
+      const instagramValid = instagram.value.trim().replace("@", "").length >= 2;
+      const planValid = plan.value.trim() !== "";
+
+      setInvalid(fields.name, !nameValid);
+      setInvalid(fields.phone, !phoneValid);
+      setInvalid(fields.gmail, !gmailValid);
+      setInvalid(fields.instagram, !instagramValid);
+      setInvalid(fields.plan, !planValid);
+
+      return nameValid && phoneValid && gmailValid && instagramValid && planValid;
+    }
+
+    orderForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      if (!validateForm()) return;
+
+      let instaValue = instagram.value.trim();
+
+      if (!instaValue.startsWith("@")) {
+        instaValue = "@" + instaValue;
+      }
+
+      instagram.value = instaValue;
+
+      const submitButton = orderForm.querySelector(".send-btn");
+      submitButton.textContent = "Sending...";
+      submitButton.disabled = true;
+
+      const formData = new FormData(orderForm);
+
+      try {
+        const response = await fetch(orderForm.action, {
+          method: "POST",
+          body: formData,
+          headers: {
+            Accept: "application/json",
+          },
+        });
+
+        if (response.ok) {
+          confirmName.textContent = fullName.value.trim();
+          confirmInstagram.textContent = instaValue;
+          confirmPlan.textContent = plan.options[plan.selectedIndex].text;
+
+          orderForm.style.display = "none";
+          successCard.classList.add("show");
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        } else {
+          alert("Something went wrong. Please try again.");
+          submitButton.textContent = "Send Request";
+          submitButton.disabled = false;
+        }
+      } catch (error) {
+        alert("Network error. Please check your internet and try again.");
+        submitButton.textContent = "Send Request";
+        submitButton.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
