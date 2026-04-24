@@ -10,1027 +10,17 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-  <style>
-    :root {
-      --bg: #070a12;
-      --bg-2: #0a1020;
-      --card: rgba(255, 255, 255, 0.055);
-      --card-2: rgba(255, 255, 255, 0.085);
-      --text: #ffffff;
-      --muted: #a7b0c0;
-      --muted-2: #778197;
-      --line: rgba(255, 255, 255, 0.12);
-      --cyan: #67e8f9;
-      --blue: #6366f1;
-      --pink: #d946ef;
-      --green: #86efac;
-      --yellow: #fde047;
-      --radius-xl: 28px;
-      --radius-lg: 22px;
-      --shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
-      --max: 1180px;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      min-height: 100vh;
-      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      overflow-x: hidden;
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      z-index: -3;
-      background:
-        radial-gradient(circle at 10% 5%, rgba(103, 232, 249, 0.2), transparent 28%),
-        radial-gradient(circle at 90% 22%, rgba(217, 70, 239, 0.18), transparent 30%),
-        radial-gradient(circle at 45% 92%, rgba(99, 102, 241, 0.2), transparent 32%),
-        #070a12;
-    }
-
-    body::after {
-      content: "";
-      position: fixed;
-      inset: 0;
-      z-index: -2;
-      background-image:
-        linear-gradient(to right, rgba(255, 255, 255, 0.055) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.055) 1px, transparent 1px);
-      background-size: 72px 72px;
-      mask-image: radial-gradient(ellipse at top, black 20%, transparent 72%);
-      pointer-events: none;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    img {
-      max-width: 100%;
-      display: block;
-    }
-
-    .container {
-      width: min(100% - 32px, var(--max));
-      margin-inline: auto;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 16px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.06);
-      color: #d8dfeb;
-      font-size: 14px;
-      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.18);
-      backdrop-filter: blur(20px);
-    }
-
-    .icon-dot {
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--cyan), var(--blue));
-      box-shadow: 0 0 22px rgba(103, 232, 249, 0.75);
-    }
-
-    .section-kicker {
-      font-size: 13px;
-      font-weight: 900;
-      letter-spacing: 0.26em;
-      text-transform: uppercase;
-      color: var(--cyan);
-    }
-
-    .section-title {
-      margin-top: 14px;
-      font-size: clamp(32px, 5vw, 54px);
-      line-height: 1.04;
-      letter-spacing: -0.045em;
-      font-weight: 900;
-    }
-
-    .section-text {
-      margin-top: 18px;
-      color: var(--muted);
-      line-height: 1.8;
-      font-size: 16px;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      min-height: 52px;
-      padding: 14px 24px;
-      border-radius: 999px;
-      font-weight: 900;
-      border: 1px solid transparent;
-      cursor: pointer;
-      transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
-      white-space: nowrap;
-    }
-
-    .btn:hover {
-      transform: translateY(-2px) scale(1.015);
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--cyan), var(--blue));
-      color: #fff;
-      box-shadow: 0 18px 60px rgba(103, 232, 249, 0.18);
-    }
-
-    .btn-dark {
-      background: #080b14;
-      color: #fff;
-    }
-
-    .btn-ghost {
-      border-color: var(--line);
-      background: rgba(255, 255, 255, 0.06);
-      color: #fff;
-    }
-
-    .btn-ghost:hover {
-      background: rgba(255, 255, 255, 0.1);
-    }
-
-    /* Header */
-    .site-header {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      border-bottom: 1px solid var(--line);
-      background: rgba(7, 10, 18, 0.76);
-      backdrop-filter: blur(24px);
-    }
-
-    .navbar {
-      height: 78px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      min-width: fit-content;
-    }
-
-    .logo-wrap {
-      position: relative;
-      width: 46px;
-      height: 46px;
-      display: grid;
-      place-items: center;
-      overflow: hidden;
-      border-radius: 18px;
-      background: #fff;
-      border: 1px solid var(--line);
-      box-shadow: 0 16px 44px rgba(103, 232, 249, 0.13);
-    }
-
-    .logo-wrap img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      padding: 5px;
-    }
-
-    .logo-fallback {
-      position: absolute;
-      inset: 0;
-      display: grid;
-      place-items: center;
-      color: #080b14;
-      font-weight: 900;
-      font-size: 15px;
-      background: linear-gradient(135deg, #fff, #dffbff);
-    }
-
-    .logo-wrap img:not([src=""]):not(:broken) + .logo-fallback {
-      display: none;
-    }
-
-    .brand-name {
-      font-size: 20px;
-      line-height: 1;
-      font-weight: 900;
-      letter-spacing: -0.04em;
-    }
-
-    .brand-line {
-      margin-top: 4px;
-      color: var(--muted-2);
-      font-size: 12px;
-      font-weight: 600;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 8px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.045);
-    }
-
-    .nav-links a {
-      padding: 10px 14px;
-      border-radius: 999px;
-      color: #c9d2e2;
-      font-size: 14px;
-      font-weight: 700;
-      transition: 0.25s ease;
-    }
-
-    .nav-links a:hover {
-      color: #fff;
-      background: rgba(255, 255, 255, 0.08);
-    }
-
-    .nav-actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .menu-btn {
-      display: none;
-      width: 46px;
-      height: 46px;
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      background: rgba(255, 255, 255, 0.06);
-      color: #fff;
-      font-size: 24px;
-      cursor: pointer;
-    }
-
-    .mobile-menu {
-      display: none;
-      border-top: 1px solid var(--line);
-      padding: 14px 0 18px;
-      background: rgba(7, 10, 18, 0.95);
-      backdrop-filter: blur(20px);
-    }
-
-    .mobile-menu a {
-      display: block;
-      padding: 14px 16px;
-      border-radius: 16px;
-      color: #d6deea;
-      font-weight: 800;
-    }
-
-    .mobile-menu a:hover {
-      background: rgba(255, 255, 255, 0.08);
-      color: #fff;
-    }
-
-    /* Hero */
-    .hero {
-      position: relative;
-      display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      align-items: center;
-      gap: 54px;
-      padding: 96px 0 86px;
-    }
-
-    .hero-content {
-      animation: fadeUp 0.8s ease both;
-    }
-
-    .hero h1 {
-      margin-top: 22px;
-      max-width: 760px;
-      font-size: clamp(42px, 7vw, 78px);
-      line-height: 1.02;
-      letter-spacing: -0.065em;
-      font-weight: 900;
-    }
-
-    .gradient-text {
-      background: linear-gradient(135deg, #fff 8%, var(--cyan), #a5b4fc 70%, #f0abfc);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .hero p {
-      margin-top: 24px;
-      max-width: 660px;
-      color: var(--muted);
-      font-size: 18px;
-      line-height: 1.8;
-    }
-
-    .hero-actions {
-      margin-top: 34px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-    }
-
-    .trust-row {
-      margin-top: 32px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .trust-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      padding: 10px 14px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.045);
-      color: #d4dbea;
-      font-size: 14px;
-      font-weight: 700;
-    }
-
-    .check {
-      color: var(--green);
-      font-weight: 900;
-    }
-
-    .dashboard-shell {
-      position: relative;
-      animation: fadeUp 0.8s ease 0.12s both;
-    }
-
-    .dashboard-shell::before {
-      content: "";
-      position: absolute;
-      inset: -18px;
-      border-radius: 40px;
-      background: linear-gradient(135deg, rgba(103, 232, 249, 0.24), rgba(99, 102, 241, 0.18), rgba(217, 70, 239, 0.22));
-      filter: blur(24px);
-      z-index: -1;
-    }
-
-    .dashboard-card {
-      border: 1px solid var(--line);
-      border-radius: 34px;
-      padding: 16px;
-      background: rgba(255, 255, 255, 0.065);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(22px);
-    }
-
-    .dashboard-inner {
-      border: 1px solid var(--line);
-      border-radius: 26px;
-      background: rgba(10, 16, 32, 0.9);
-      padding: 24px;
-    }
-
-    .dash-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 16px;
-      align-items: flex-start;
-      margin-bottom: 22px;
-    }
-
-    .dash-top span {
-      color: var(--muted-2);
-      font-size: 14px;
-      font-weight: 700;
-    }
-
-    .dash-top h3 {
-      margin-top: 5px;
-      font-size: 25px;
-      letter-spacing: -0.04em;
-    }
-
-    .growth-badge {
-      padding: 8px 12px;
-      border-radius: 999px;
-      color: var(--green);
-      background: rgba(134, 239, 172, 0.1);
-      font-size: 14px;
-      font-weight: 900;
-      white-space: nowrap;
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
-    }
-
-    .stat-card {
-      padding: 18px;
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      background: rgba(255, 255, 255, 0.045);
-    }
-
-    .stat-card strong {
-      display: block;
-      font-size: 31px;
-      letter-spacing: -0.05em;
-    }
-
-    .stat-card span {
-      display: block;
-      margin-top: 5px;
-      color: var(--muted-2);
-      font-size: 13px;
-      line-height: 1.35;
-      font-weight: 700;
-    }
-
-    .chart-card {
-      margin-top: 16px;
-      padding: 20px;
-      border: 1px solid var(--line);
-      border-radius: 26px;
-      background: linear-gradient(135deg, rgba(103, 232, 249, 0.12), rgba(99, 102, 241, 0.11), rgba(217, 70, 239, 0.12));
-    }
-
-    .chart-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      color: #cfd8e8;
-      font-size: 14px;
-      font-weight: 800;
-    }
-
-    .chart-head b {
-      color: #bff8ff;
-    }
-
-    .bars {
-      height: 170px;
-      margin-top: 22px;
-      display: flex;
-      align-items: end;
-      gap: 10px;
-    }
-
-    .bar {
-      flex: 1;
-      min-width: 10px;
-      border-radius: 999px 999px 8px 8px;
-      background: linear-gradient(to top, var(--cyan), #fff);
-      animation: growBar 1s ease both;
-      opacity: 0.95;
-    }
-
-    .bar:nth-child(1) { height: 42%; animation-delay: 0.05s; }
-    .bar:nth-child(2) { height: 58%; animation-delay: 0.1s; }
-    .bar:nth-child(3) { height: 45%; animation-delay: 0.15s; }
-    .bar:nth-child(4) { height: 70%; animation-delay: 0.2s; }
-    .bar:nth-child(5) { height: 64%; animation-delay: 0.25s; }
-    .bar:nth-child(6) { height: 82%; animation-delay: 0.3s; }
-    .bar:nth-child(7) { height: 76%; animation-delay: 0.35s; }
-    .bar:nth-child(8) { height: 92%; animation-delay: 0.4s; }
-    .bar:nth-child(9) { height: 88%; animation-delay: 0.45s; }
-
-    /* Sections */
-    .section {
-      padding: 84px 0;
-    }
-
-    .center {
-      text-align: center;
-      max-width: 760px;
-      margin: 0 auto;
-    }
-
-    .feature-grid {
-      margin-top: 48px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 22px;
-    }
-
-    .feature-card,
-    .pricing-card,
-    .review-card,
-    .solution-card {
-      border: 1px solid var(--line);
-      background: var(--card);
-      border-radius: var(--radius-xl);
-      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.16);
-    }
-
-    .feature-card {
-      padding: 30px;
-      transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
-    }
-
-    .feature-card:hover {
-      transform: translateY(-6px);
-      border-color: rgba(103, 232, 249, 0.38);
-      background: var(--card-2);
-    }
-
-    .feature-icon {
-      width: 56px;
-      height: 56px;
-      display: grid;
-      place-items: center;
-      border-radius: 20px;
-      color: var(--cyan);
-      background: rgba(103, 232, 249, 0.1);
-      border: 1px solid rgba(103, 232, 249, 0.22);
-      font-size: 25px;
-      margin-bottom: 22px;
-    }
-
-    .feature-card h3 {
-      font-size: 22px;
-      letter-spacing: -0.03em;
-    }
-
-    .feature-card p {
-      margin-top: 12px;
-      color: var(--muted);
-      line-height: 1.75;
-    }
-
-    .split-section {
-      border-block: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.026);
-    }
-
-    .split-grid {
-      display: grid;
-      grid-template-columns: 0.82fr 1.18fr;
-      gap: 54px;
-      align-items: center;
-    }
-
-    .solutions-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
-    }
-
-    .solution-card {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 20px;
-      font-weight: 800;
-      color: #e3e9f4;
-      background: rgba(10, 16, 32, 0.75);
-    }
-
-    .pricing-head {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 32px;
-      margin-bottom: 44px;
-    }
-
-    .pricing-head > div {
-      max-width: 720px;
-    }
-
-    .pricing-head p {
-      max-width: 460px;
-      color: var(--muted);
-      line-height: 1.8;
-    }
-
-    .pricing-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 22px;
-    }
-
-    .pricing-card {
-      position: relative;
-      padding: 30px;
-    }
-
-    .pricing-card.popular {
-      border-color: rgba(103, 232, 249, 0.42);
-      background: linear-gradient(135deg, rgba(103, 232, 249, 0.13), rgba(99, 102, 241, 0.12), rgba(217, 70, 239, 0.13));
-    }
-
-    .popular-tag {
-      position: absolute;
-      top: 24px;
-      right: 24px;
-      padding: 7px 11px;
-      border-radius: 999px;
-      background: var(--cyan);
-      color: #071018;
-      font-size: 12px;
-      font-weight: 900;
-    }
-
-    .pricing-card h3 {
-      font-size: 25px;
-      letter-spacing: -0.04em;
-    }
-
-    .pricing-card .desc {
-      margin-top: 10px;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-
-    .price {
-      margin-top: 24px;
-      display: flex;
-      align-items: end;
-      gap: 4px;
-    }
-
-    .price strong {
-      font-size: 48px;
-      letter-spacing: -0.06em;
-    }
-
-    .price span {
-      padding-bottom: 9px;
-      color: var(--muted-2);
-      font-weight: 700;
-    }
-
-    .pricing-card ul {
-      margin-top: 28px;
-      list-style: none;
-      display: grid;
-      gap: 15px;
-      color: #d6deea;
-    }
-
-    .pricing-card li {
-      display: flex;
-      gap: 11px;
-      line-height: 1.5;
-    }
-
-    .pricing-card .btn {
-      width: 100%;
-      margin-top: 30px;
-    }
-
-    .review-box {
-      border: 1px solid var(--line);
-      border-radius: 34px;
-      padding: 42px;
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.085), rgba(255, 255, 255, 0.026));
-      box-shadow: var(--shadow);
-    }
-
-    .review-grid {
-      display: grid;
-      grid-template-columns: 0.9fr 1.1fr;
-      gap: 42px;
-      align-items: center;
-    }
-
-    .review-card {
-      padding: 30px;
-      background: rgba(7, 10, 18, 0.72);
-    }
-
-    .stars {
-      color: var(--yellow);
-      letter-spacing: 3px;
-      font-size: 18px;
-    }
-
-    .quote {
-      margin-top: 18px;
-      color: #e2e8f0;
-      font-size: 20px;
-      line-height: 1.75;
-    }
-
-    .person {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-top: 24px;
-    }
-
-    .avatar {
-      width: 50px;
-      height: 50px;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--cyan), var(--blue));
-      color: #071018;
-      font-weight: 900;
-    }
-
-    .person strong {
-      display: block;
-    }
-
-    .person span {
-      display: block;
-      margin-top: 3px;
-      color: var(--muted-2);
-      font-size: 14px;
-      font-weight: 700;
-    }
-
-    .cta {
-      padding-bottom: 84px;
-    }
-
-    .cta-box {
-      position: relative;
-      overflow: hidden;
-      border-radius: 34px;
-      background: #fff;
-      color: #071018;
-      text-align: center;
-      padding: 64px 28px;
-      box-shadow: 0 26px 90px rgba(103, 232, 249, 0.12);
-    }
-
-    .cta-box::before,
-    .cta-box::after {
-      content: "";
-      position: absolute;
-      width: 180px;
-      height: 180px;
-      border-radius: 50%;
-      filter: blur(48px);
-      opacity: 0.7;
-    }
-
-    .cta-box::before {
-      background: var(--cyan);
-      top: -60px;
-      left: -30px;
-    }
-
-    .cta-box::after {
-      background: var(--blue);
-      bottom: -70px;
-      right: -30px;
-    }
-
-    .cta-content {
-      position: relative;
-      z-index: 1;
-      max-width: 760px;
-      margin: 0 auto;
-    }
-
-    .cta h2 {
-      font-size: clamp(32px, 5vw, 54px);
-      line-height: 1.05;
-      letter-spacing: -0.05em;
-      font-weight: 900;
-    }
-
-    .cta p {
-      margin: 18px auto 0;
-      max-width: 620px;
-      color: #526073;
-      line-height: 1.8;
-    }
-
-    .cta .btn {
-      margin-top: 28px;
-    }
-
-    /* Footer */
-    .footer {
-      border-top: 1px solid var(--line);
-      background: rgba(5, 7, 17, 0.94);
-    }
-
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 1.35fr 0.75fr 0.75fr 0.75fr;
-      gap: 42px;
-      padding: 54px 0;
-    }
-
-    .footer-about p {
-      margin-top: 18px;
-      max-width: 360px;
-      color: var(--muted-2);
-      line-height: 1.8;
-    }
-
-    .footer h4 {
-      font-size: 15px;
-      margin-bottom: 16px;
-    }
-
-    .footer-links {
-      display: grid;
-      gap: 12px;
-    }
-
-    .footer-links a {
-      color: var(--muted-2);
-      font-size: 14px;
-      font-weight: 700;
-      transition: 0.2s ease;
-    }
-
-    .footer-links a:hover {
-      color: #fff;
-    }
-
-    .footer-bottom {
-      border-top: 1px solid var(--line);
-      padding: 22px 0;
-      text-align: center;
-      color: var(--muted-2);
-      font-size: 14px;
-      font-weight: 600;
-    }
-
-    @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(24px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes growBar {
-      from {
-        transform: scaleY(0.25);
-        transform-origin: bottom;
-      }
-      to {
-        transform: scaleY(1);
-        transform-origin: bottom;
-      }
-    }
-
-    @media (max-width: 1024px) {
-      .nav-links,
-      .nav-actions {
-        display: none;
-      }
-
-      .menu-btn {
-        display: block;
-      }
-
-      .mobile-menu.active {
-        display: block;
-      }
-
-      .hero {
-        grid-template-columns: 1fr;
-        padding-top: 72px;
-        text-align: center;
-      }
-
-      .hero p,
-      .hero h1 {
-        margin-inline: auto;
-      }
-
-      .hero-actions,
-      .trust-row {
-        justify-content: center;
-      }
-
-      .split-grid,
-      .review-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .pricing-head {
-        display: block;
-      }
-
-      .pricing-head p {
-        margin-top: 18px;
-      }
-    }
-
-    @media (max-width: 820px) {
-      .feature-grid,
-      .pricing-grid,
-      .footer-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .solutions-grid,
-      .stats-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .section {
-        padding: 68px 0;
-      }
-
-      .review-box {
-        padding: 28px;
-      }
-    }
-
-    @media (max-width: 540px) {
-      .container {
-        width: min(100% - 22px, var(--max));
-      }
-
-      .navbar {
-        height: 70px;
-      }
-
-      .brand-line {
-        display: none;
-      }
-
-      .logo-wrap {
-        width: 42px;
-        height: 42px;
-        border-radius: 16px;
-      }
-
-      .brand-name {
-        font-size: 18px;
-      }
-
-      .hero {
-        padding: 56px 0 60px;
-      }
-
-      .hero-actions .btn,
-      .cta .btn {
-        width: 100%;
-      }
-
-      .dashboard-inner {
-        padding: 18px;
-      }
-
-      .dash-top {
-        flex-direction: column;
-      }
-
-      .bars {
-        gap: 7px;
-      }
-
-      .feature-card,
-      .pricing-card,
-      .review-card {
-        padding: 24px;
-      }
-
-      .quote {
-        font-size: 18px;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header class="site-header">
     <div class="container navbar">
-      <a class="brand" href="#" aria-label="Follow Spark Home">
+      <a class="brand" href="index.html" aria-label="Follow Spark Home">
         <span class="logo-wrap">
-          <!-- Put your logo file in the same folder as index.html and name it: logo.png -->
           <img src="logo.png" alt="Follow Spark logo" onerror="this.style.display='none'" />
           <span class="logo-fallback">FS</span>
         </span>
+
         <span>
           <span class="brand-name">Follow Spark</span>
           <span class="brand-line">Grow with clarity</span>
@@ -1038,15 +28,15 @@
       </a>
 
       <nav class="nav-links" aria-label="Main navigation">
-        <a href="#features">Features</a>
-        <a href="#solutions">Solutions</a>
-        <a href="#pricing">Pricing</a>
-        <a href="#reviews">Reviews</a>
+        <a href="features.html">Features</a>
+        <a href="solutions.html">Solutions</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="index.html#reviews">Reviews</a>
       </nav>
 
       <div class="nav-actions">
-        <a class="btn btn-ghost" href="#contact">Contact</a>
-        <a class="btn btn-primary" href="#pricing">Get Started</a>
+        <a class="btn btn-ghost" href="index.html#contact">Contact</a>
+        <a class="btn btn-primary" href="pricing.html">Get Started</a>
       </div>
 
       <button class="menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
@@ -1054,11 +44,11 @@
 
     <div class="mobile-menu" id="mobileMenu">
       <div class="container">
-        <a href="#features">Features</a>
-        <a href="#solutions">Solutions</a>
-        <a href="#pricing">Pricing</a>
-        <a href="#reviews">Reviews</a>
-        <a href="#contact">Contact Us</a>
+        <a href="features.html">Features</a>
+        <a href="solutions.html">Solutions</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="index.html#reviews">Reviews</a>
+        <a href="index.html#contact">Contact Us</a>
       </div>
     </div>
   </header>
@@ -1066,21 +56,29 @@
   <main>
     <section class="container hero">
       <div class="hero-content">
-        <span class="badge"><span class="icon-dot"></span> Professional growth website for modern brands</span>
-        <h1>Turn your online presence into a <span class="gradient-text">brand people remember.</span></h1>
+        <span class="badge">
+          <span class="icon-dot"></span>
+          Professional growth website for modern brands
+        </span>
+
+        <h1>
+          Turn your online presence into a
+          <span class="gradient-text">brand people remember.</span>
+        </h1>
+
         <p>
           Follow Spark is built for creators, startups, and businesses that want a premium digital first impression — clean, fast, responsive, and easy to customize.
         </p>
 
         <div class="hero-actions">
-          <a class="btn btn-primary" href="#pricing">Start Growing →</a>
-          <a class="btn btn-ghost" href="#features">▶ Explore Features</a>
+          <a class="btn btn-primary" href="pricing.html">Start Growing →</a>
+          <a class="btn btn-ghost" href="features.html">▶ Explore Features</a>
         </div>
 
         <div class="trust-row">
-          <span class="trust-pill"><span class="check">✓</span> Responsive</span>
-          <span class="trust-pill"><span class="check">✓</span> Premium UI</span>
-          <span class="trust-pill"><span class="check">✓</span> GitHub Ready</span>
+          <span class="trust-pill"><span class="check">✓</span> Mobile First</span>
+          <span class="trust-pill"><span class="check">✓</span> PC Ready</span>
+          <span class="trust-pill"><span class="check">✓</span> Tablet Friendly</span>
         </div>
       </div>
 
@@ -1096,10 +94,25 @@
             </div>
 
             <div class="stats-grid">
-              <div class="stat-card"><strong>10x</strong><span>Cleaner brand presence</span></div>
-              <div class="stat-card"><strong>100%</strong><span>Responsive layout</span></div>
-              <div class="stat-card"><strong>24/7</strong><span>Online visibility</span></div>
-              <div class="stat-card"><strong>4.9/5</strong><span>Premium feel</span></div>
+              <div class="stat-card">
+                <strong>10x</strong>
+                <span>Cleaner brand presence</span>
+              </div>
+
+              <div class="stat-card">
+                <strong>100%</strong>
+                <span>Responsive layout</span>
+              </div>
+
+              <div class="stat-card">
+                <strong>24/7</strong>
+                <span>Online visibility</span>
+              </div>
+
+              <div class="stat-card">
+                <strong>4.9/5</strong>
+                <span>Premium feel</span>
+              </div>
             </div>
 
             <div class="chart-card">
@@ -1107,6 +120,7 @@
                 <span>Engagement score</span>
                 <b>Excellent</b>
               </div>
+
               <div class="bars" aria-label="Growth chart">
                 <span class="bar"></span>
                 <span class="bar"></span>
@@ -1124,118 +138,24 @@
       </div>
     </section>
 
-    <section class="section" id="features">
-      <div class="container">
-        <div class="center">
-          <p class="section-kicker">Features</p>
-          <h2 class="section-title">Made to look professional everywhere</h2>
-          <p class="section-text">Mobile, tablet, and desktop layouts are handled with responsive sections, flexible grids, and clean spacing.</p>
-        </div>
-
-        <div class="feature-grid">
-          <article class="feature-card">
-            <div class="feature-icon">↗</div>
-            <h3>Smart Growth</h3>
-            <p>Build a strong online presence with a clean, conversion-focused landing page experience.</p>
-          </article>
-          <article class="feature-card">
-            <div class="feature-icon">👥</div>
-            <h3>Audience Ready</h3>
-            <p>Designed for creators, startups, agencies, communities, and digital brands that want trust fast.</p>
-          </article>
-          <article class="feature-card">
-            <div class="feature-icon">◆</div>
-            <h3>Professional Trust</h3>
-            <p>Premium spacing, polished sections, and strong visual hierarchy for a serious brand look.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section split-section" id="solutions">
-      <div class="container split-grid">
-        <div>
-          <p class="section-kicker">Solutions</p>
-          <h2 class="section-title">Use it for any modern brand</h2>
-          <p class="section-text">Follow Spark can become a service website, creator landing page, startup homepage, or app launch page. Just edit the text and links.</p>
-        </div>
-
-        <div class="solutions-grid">
-          <div class="solution-card"><span class="check">✓</span> Creator brand landing page</div>
-          <div class="solution-card"><span class="check">✓</span> Social growth service website</div>
-          <div class="solution-card"><span class="check">✓</span> Startup launch page</div>
-          <div class="solution-card"><span class="check">✓</span> Agency portfolio website</div>
-          <div class="solution-card"><span class="check">✓</span> Community platform homepage</div>
-          <div class="solution-card"><span class="check">✓</span> App or product marketing page</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="pricing">
-      <div class="container">
-        <div class="pricing-head">
-          <div>
-            <p class="section-kicker">Pricing</p>
-            <h2 class="section-title">Simple plans, premium presentation</h2>
-          </div>
-          <p>Edit these cards into service packages, subscription plans, product tiers, or portfolio highlights.</p>
-        </div>
-
-        <div class="pricing-grid">
-          <article class="pricing-card">
-            <h3>Starter</h3>
-            <p class="desc">Perfect for a simple launch.</p>
-            <div class="price"><strong>₹99</strong><span>/project</span></div>
-            <ul>
-              <li><span class="check">✓</span> Up to 1k like on reel</li>
-              <li><span class="check">✓</span> Up to 100 comments reel</li>
-              <li><span class="check">✓</span> 500 Followers reach boost</li>
-            </ul>
-            <a class="btn btn-ghost" href="#contact">Choose Starter</a>
-          </article>
-
-          <article class="pricing-card popular">
-            <span class="popular-tag">Most Popular</span>
-            <h3>Growth</h3>
-            <p class="desc">Best for professional brands.</p>
-            <div class="price"><strong>₹499</strong><span>/project</span></div>
-            <ul>
-              <li><span class="check">✓</span> Up to 1k like across 10 reels</li>
-              <li><span class="check">✓</span> Up to 100 comments across 10 reels</li>
-              <li><span class="check">✓</span> Up to 1k Followers boost</li>
-              <li><span class="check">✓</span> repost support included</li>
-            </ul>
-            <a class="btn btn-primary" href="#contact">Choose Growth</a>
-          </article>
-
-          <article class="pricing-card">
-            <h3>Scale</h3>
-            <p class="desc">For brands ready to expand.</p>
-            <div class="price"><strong>₹999</strong><span>/project</span></div>
-            <ul>
-              <li><span class="check">✓</span> Up to 10k like across 10 reels </li>
-              <li><span class="check">✓</span> Up to 1k comments across 10 reels</li>
-              <li><span class="check">✓</span> Up to 5k followers boost </li>
-              <li><span class="check">✓</span> 100 repost across 10 reels</li>
-            </ul>
-            <a class="btn btn-ghost" href="#contact">Choose Scale</a>
-          </article>
-        </div>
-      </div>
-    </section>
-
     <section class="section" id="reviews">
       <div class="container review-box">
         <div class="review-grid">
           <div>
             <p class="section-kicker">Reviews</p>
             <h2 class="section-title">Built for first impressions</h2>
-            <p class="section-text">Use this section for client reviews, user feedback, brand proof, or results from your work.</p>
+            <p class="section-text">
+              Use this section for client reviews, user feedback, brand proof, or results from your work.
+            </p>
           </div>
 
           <article class="review-card">
             <div class="stars">★★★★★</div>
-            <p class="quote">“Follow Spark gave our brand a premium look instantly. The website feels clean, modern, and trustworthy on every screen size.”</p>
+
+            <p class="quote">
+              “Follow Spark gave our brand a premium look instantly. The website feels clean, modern, and trustworthy on every screen size.”
+            </p>
+
             <div class="person">
               <div class="avatar">FS</div>
               <div>
@@ -1253,7 +173,9 @@
         <div class="cta-box">
           <div class="cta-content">
             <h2>Ready to grow with Follow Spark?</h2>
-            <p>Connect this button to WhatsApp, email, signup page, or your product checkout link.</p>
+            <p>
+              Connect this button to WhatsApp, email, signup page, or your product checkout link.
+            </p>
             <a class="btn btn-dark" href="mailto:hello@followspark.com">Contact Follow Spark →</a>
           </div>
         </div>
@@ -1261,37 +183,43 @@
     </section>
   </main>
 
+  <a class="how-floating" href="how.html">? How to use</a>
+
   <footer class="footer">
     <div class="container footer-grid">
       <div class="footer-about">
-        <a class="brand" href="#">
+        <a class="brand" href="index.html">
           <span class="logo-wrap">
             <img src="logo.png" alt="Follow Spark logo" onerror="this.style.display='none'" />
             <span class="logo-fallback">FS</span>
           </span>
+
           <span>
             <span class="brand-name">Follow Spark</span>
             <span class="brand-line">Grow with clarity</span>
           </span>
         </a>
-        <p>A professional, responsive website foundation for creators, startups, agencies, and modern digital brands.</p>
+
+        <p>
+          A professional, responsive website foundation for creators, startups, agencies, and modern digital brands.
+        </p>
       </div>
 
       <div>
         <h4>Company</h4>
         <div class="footer-links">
-          <a href="#features">Features</a>
-          <a href="#solutions">Solutions</a>
-          <a href="#pricing">Pricing</a>
+          <a href="features.html">Features</a>
+          <a href="solutions.html">Solutions</a>
+          <a href="pricing.html">Pricing</a>
         </div>
       </div>
 
       <div>
         <h4>Support</h4>
         <div class="footer-links">
-          <a href="#contact">Contact</a>
-          <a href="#reviews">Reviews</a>
-          <a href="#">Privacy</a>
+          <a href="index.html#contact">Contact</a>
+          <a href="index.html#reviews">Reviews</a>
+          <a href="how.html">How To Use</a>
         </div>
       </div>
 
@@ -1306,25 +234,13 @@
     </div>
 
     <div class="footer-bottom">
-      <div class="container">© 2026 Follow Spark. All rights reserved. Built for mobile, tablet, and desktop.</div>
+      <div class="container">
+        © 2026 Follow Spark. All rights reserved. Built for mobile, PC, and tablet.
+      </div>
     </div>
   </footer>
 
-  <script>
-    const menuBtn = document.getElementById("menuBtn");
-    const mobileMenu = document.getElementById("mobileMenu");
-
-    menuBtn.addEventListener("click", () => {
-      mobileMenu.classList.toggle("active");
-      menuBtn.textContent = mobileMenu.classList.contains("active") ? "×" : "☰";
-    });
-
-    document.querySelectorAll(".mobile-menu a").forEach((link) => {
-      link.addEventListener("click", () => {
-        mobileMenu.classList.remove("active");
-        menuBtn.textContent = "☰";
-      });
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
+
