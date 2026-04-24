@@ -72,6 +72,20 @@ document.querySelectorAll(".nav-links a, .mobile-menu a").forEach((link) => {
   }
 });
 
+@media (min-width: 721px) {
+  .how-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1cm;
+  }
+}
+
+@media (min-width: 1025px) {
+  .how-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1cm;
+  }
+}
+
 // Smooth scroll only for same-page hash links
 document.querySelectorAll('a[href^="#"]').forEach((link) => {
   link.addEventListener("click", (event) => {
