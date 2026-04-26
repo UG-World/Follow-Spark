@@ -542,16 +542,49 @@
               <div class="error">Please enter your Instagram username.</div>
             </div>
 
-            <div class="field full" id="planField">
-              <label for="plan">Selected Plan</label>
-              <select id="plan" name="Selected Plan">
-                <option value="">Select a plan</option>
-                <option value="Starter">Starter - ₹99</option>
-                <option value="Growth">Growth - ₹499</option>
-                <option value="Scale">Scale - ₹999</option>
-              </select>
-              <div class="error">Please select your plan.</div>
-            </div>
+<div class="field full" id="planField">
+  <label for="plan">Selected Plan</label>
+
+  <select id="plan" name="Selected Plan">
+    <option value="">Select a plan</option>
+
+    <optgroup label="Main Pricing Plans">
+      <option value="Starter">Starter - ₹199</option>
+      <option value="Growth">Growth - ₹499</option>
+      <option value="Scale">Scale - ₹999</option>
+    </optgroup>
+
+    <optgroup label="Combo Plans">
+      <option value="Mini Combo">Mini Combo - ₹49 | 100 followers + 100 likes on 1 reel + 10 comments</option>
+      <option value="Creator Combo">Creator Combo - ₹99 | 500 followers + 100 likes across 5 reels + 10 comments</option>
+      <option value="Pro Combo">Pro Combo - ₹149 | 1K followers + 100 likes across 10 reels + 10 comments + 50 repost</option>
+    </optgroup>
+
+    <optgroup label="Followers Plans">
+      <option value="100 Followers">100 Followers - ₹29</option>
+      <option value="500 Followers">500 Followers - ₹99</option>
+      <option value="1K Followers">1K Followers - ₹199</option>
+    </optgroup>
+
+    <optgroup label="Likes Plans">
+      <option value="100 Likes">100 Likes - ₹19</option>
+      <option value="500 Likes">500 Likes - ₹69</option>
+      <option value="1K Likes">1K Likes - ₹99</option>
+    </optgroup>
+
+    <optgroup label="Comments Plans">
+      <option value="10 Comments">10 Comments - ₹19</option>
+      <option value="50 Comments">50 Comments - ₹49</option>
+      <option value="100 Comments">100 Comments - ₹99</option>
+    </optgroup>
+
+    <optgroup label="Custom">
+      <option value="Custom Plan">Custom Plan - Team will contact you</option>
+    </optgroup>
+  </select>
+
+  <div class="error">Please select your plan.</div>
+</div>
           </div>
 
           <button class="send-btn" type="submit">Send Request</button>
