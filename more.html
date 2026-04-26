@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Follow Spark combo, followers, likes, and comments plans." />
+  <title>More Plans | Follow Spark</title>
+
+  <style>
+    :root {
+      --bg: #070a12;
+      --card: rgba(255, 255, 255, 0.065);
+      --card-2: rgba(255, 255, 255, 0.095);
+      --text: #ffffff;
+      --muted: #a7b0c0;
+      --muted-2: #778197;
+      --line: rgba(255, 255, 255, 0.13);
+      --cyan: #67e8f9;
+      --blue: #6366f1;
+      --pink: #d946ef;
+      --green: #86efac;
+      --yellow: #fde047;
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+      --radius: 28px;
+      --max: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      background:
+        radial-gradient(circle at 10% 5%, rgba(103, 232, 249, 0.22), transparent 28%),
+        radial-gradient(circle at 90% 20%, rgba(217, 70, 239, 0.18), transparent 30%),
+        radial-gradient(circle at 45% 95%, rgba(99, 102, 241, 0.22), transparent 32%),
+        #070a12;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background-image:
+        linear-gradient(to right, rgba(255, 255, 255, 0.055) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.055) 1px, transparent 1px);
+      background-size: 72px 72px;
+      mask-image: radial-gradient(ellipse at top, black 20%, transparent 72%);
+      pointer-events: none;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: min(100% - 22px, var(--max));
+      margin-inline: auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid var(--line);
+      background: rgba(7, 10, 18, 0.78);
+      backdrop-filter: blur(24px);
+    }
+
+    .navbar {
+      min-height: 74px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-wrap {
+      position: relative;
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: #fff;
+      box-shadow: 0 16px 44px rgba(103, 232, 249, 0.13);
+    }
+
+    .logo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 5px;
+    }
+
+    .logo-fallback {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      color: #071018;
+      font-size: 14px;
+      font-weight: 900;
+      z-index: 0;
+    }
+
+    .brand-name {
+      display: block;
+      font-size: 18px;
+      line-height: 1;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+    }
+
+    .brand-line {
+      display: none;
+      margin-top: 4px;
+      color: var(--muted-2);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .nav-links {
+      display: none;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 12px 18px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 900;
+      transition: 0.25s ease;
+      white-space: nowrap;
+    }
+
+    .back-btn:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .hero {
+      padding: 58px 0 30px;
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      color: #d8dfeb;
+      font-size: 13px;
+      font-weight: 900;
+      backdrop-filter: blur(20px);
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--cyan), var(--blue));
+      box-shadow: 0 0 22px rgba(103, 232, 249, 0.75);
+    }
+
+    .hero h1 {
+      max-width: 880px;
+      margin: 22px auto 0;
+      font-size: clamp(38px, 11vw, 72px);
+      line-height: 1.02;
+      letter-spacing: -0.065em;
+      font-weight: 900;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #fff 8%, var(--cyan), #a5b4fc 70%, #f0abfc);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      max-width: 760px;
+      margin: 22px auto 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.8;
+    }
+
+    .quick-nav {
+      position: sticky;
+      top: 74px;
+      z-index: 40;
+      padding: 12px 0;
+      background: rgba(7, 10, 18, 0.7);
+      backdrop-filter: blur(18px);
+      border-block: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .quick-row {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+      scrollbar-width: none;
+    }
+
+    .quick-row::-webkit-scrollbar {
+      display: none;
+    }
+
+    .quick-btn {
+      flex: 0 0 auto;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.055);
+      color: #dce6f5;
+      padding: 11px 16px;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 900;
+      cursor: pointer;
+      transition: 0.25s ease;
+    }
+
+    .quick-btn:hover,
+    .quick-btn.active {
+      background: linear-gradient(135deg, rgba(103, 232, 249, 0.22), rgba(99, 102, 241, 0.2));
+      border-color: rgba(103, 232, 249, 0.42);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    .section {
+      padding: 54px 0;
+    }
+
+    .section-head {
+      margin-bottom: 26px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .section-kicker {
+      color: var(--cyan);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+    }
+
+    .section-title {
+      font-size: clamp(30px, 8vw, 48px);
+      line-height: 1.05;
+      letter-spacing: -0.05em;
+      font-weight: 900;
+    }
+
+    .section-text {
+      max-width: 680px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .plans-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 22px;
+    }
+
+    .plan-card {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--card);
+      box-shadow: var(--shadow);
+      padding: 26px;
+      transition: 0.25s ease;
+    }
+
+    .plan-card::before {
+      content: "";
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      right: -70px;
+      top: -70px;
+      border-radius: 50%;
+      background: rgba(103, 232, 249, 0.12);
+      filter: blur(32px);
+      pointer-events: none;
+    }
+
+    .plan-card:hover {
+      transform: translateY(-7px);
+      border-color: rgba(103, 232, 249, 0.42);
+      background: var(--card-2);
+    }
+
+    .plan-card.popular {
+      border-color: rgba(103, 232, 249, 0.48);
+      background: linear-gradient(135deg, rgba(103, 232, 249, 0.13), rgba(99, 102, 241, 0.12), rgba(217, 70, 239, 0.13));
+    }
+
+    .tag {
+      display: inline-flex;
+      margin-bottom: 14px;
+      padding: 7px 11px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.07);
+      color: var(--cyan);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .popular-tag {
+      position: absolute;
+      top: 22px;
+      right: 22px;
+      padding: 7px 11px;
+      border-radius: 999px;
+      background: var(--cyan);
+      color: #071018;
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .plan-card h3 {
+      padding-right: 82px;
+      font-size: 24px;
+      letter-spacing: -0.04em;
+      font-weight: 900;
+    }
+
+    .desc {
+      margin-top: 10px;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 15px;
+    }
+
+    .price {
+      margin-top: 24px;
+      display: flex;
+      align-items: end;
+      gap: 5px;
+    }
+
+    .price strong {
+      font-size: 44px;
+      letter-spacing: -0.06em;
+      font-weight: 900;
+    }
+
+    .price span {
+      padding-bottom: 9px;
+      color: var(--muted-2);
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .items {
+      margin-top: 26px;
+      list-style: none;
+      display: grid;
+      gap: 14px;
+    }
+
+    .items li {
+      display: flex;
+      gap: 11px;
+      color: #dce6f5;
+      line-height: 1.5;
+      font-weight: 700;
+    }
+
+    .check {
+      color: var(--green);
+      font-weight: 900;
+      flex: 0 0 auto;
+    }
+
+    .order-btn {
+      width: 100%;
+      min-height: 54px;
+      margin-top: 30px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--cyan), var(--blue));
+      color: #fff;
+      font-weight: 900;
+      transition: 0.25s ease;
+      box-shadow: 0 18px 60px rgba(103, 232, 249, 0.16);
+    }
+
+    .order-btn:hover {
+      transform: translateY(-2px) scale(1.01);
+    }
+
+    .note-box {
+      margin: 34px 0 72px;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: rgba(255, 255, 255, 0.055);
+      padding: 24px;
+      text-align: center;
+      color: var(--muted);
+      line-height: 1.8;
+      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.18);
+    }
+
+    .note-box strong {
+      color: #fff;
+    }
+
+    @media (min-width: 720px) {
+      .container {
+        width: min(100% - 48px, var(--max));
+      }
+
+      .brand-line {
+        display: block;
+      }
+
+      .hero {
+        padding-top: 72px;
+      }
+
+      .plans-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1025px) {
+      .navbar {
+        min-height: 78px;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.045);
+      }
+
+      .nav-links a {
+        padding: 10px 14px;
+        border-radius: 999px;
+        color: #c9d2e2;
+        font-size: 14px;
+        font-weight: 800;
+        transition: 0.25s ease;
+      }
+
+      .nav-links a:hover,
+      .nav-links a.active {
+        color: #fff;
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      .hero {
+        padding-top: 92px;
+      }
+
+      .hero p {
+        font-size: 18px;
+      }
+
+      .section-head {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: end;
+      }
+
+      .section-text {
+        max-width: 430px;
+      }
+
+      .plans-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .plan-card {
+        padding: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container navbar">
+      <a class="brand" href="index.html" aria-label="Follow Spark Home">
+        <span class="logo-wrap">
+          <span class="logo-fallback">FS</span>
+          <img src="logo.png" alt="Follow Spark logo" onerror="this.style.display='none'" />
+        </span>
+
+        <span>
+          <span class="brand-name">Follow Spark</span>
+          <span class="brand-line">More growth plans</span>
+        </span>
+      </a>
+
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="pricing.html">Pricing</a>
+        <a class="active" href="more.html">More</a>
+        <a href="how.html">How To Use</a>
+      </nav>
+
+      <a class="back-btn" href="index.html">← Back</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="section" id="combo">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Combo Plans</p>
+            <h2 class="section-title">Followers + likes + comments</h2>
+          </div>
+          <p class="section-text">
+            Best plans for users who want all-round profile and reel engagement support.
+          </p>
+        </div>
+
+        <div class="plans-grid">
+          <article class="plan-card">
+            <span class="tag">Combo Basic</span>
+            <h3>Mini Combo</h3>
+            <p class="desc">Affordable first order for testing profile and reel engagement.</p>
+
+            <div class="price">
+              <strong>₹49</strong>
+              <span>/order</span>
+            </div>
+
+            <ul class="items">
+              <li><span class="check">✓</span> 100 followers</li>
+              <li><span class="check">✓</span> 100 likes on 1 reel</li>
+              <li><span class="check">✓</span> 10 comments on 1 reel</li>
+            </ul>
+
+            <a class="order-btn" href="contact.html">Order Now</a>
+          </article>
+
+          <article class="plan-card popular">
+            <span class="popular-tag">Popular</span>
+            <span class="tag">Combo Growth</span>
+            <h3>Creator Combo</h3>
+            <p class="desc">A clean starter package for creators with multiple reels.</p>
+
+            <div class="price">
+              <strong>₹99</strong>
+              <span>/order</span>
+            </div>
+
+            <ul class="items">
+              <li><span class="check">✓</span> 500 followers</li>
+              <li><span class="check">✓</span> 100 likes across 5 reels</li>
+              <li><span class="check">✓</span> 10 comments across 5 reels</li>
+            </ul>
+
+            <a class="order-btn" href="contact.html">Order Now</a>
+          </article>
+
+          <article class="plan-card">
+            <span class="tag">Combo Pro</span>
+            <h3>Pro Combo</h3>
+            <p class="desc">Best for creators who want followers, reel activity, and repost support.</p>
+
+            <div class="price">
+              <strong>₹149</strong>
+              <span>/order</span>
+            </div>
+
+            <ul class="items">
+              <li><span class="check">✓</span> 1K followers</li>
+              <li><span class="check">✓</span> 100 likes across 10 reels</li>
+              <li><span class="check">✓</span> 10 comments across 10 reels</li>
+              <li><span class="check">✓</span> 50 repost on 1 reel</li>
+            </ul>
+
+            <a class="order-btn" href="contact.html">Order Now</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="followers">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Followers Plans</p>
+            <h2 class="section-title">Build profile trust</h2>
+          </div>
+          <p class="section-text">
+            Simple follower-only plans for profiles that need a stronger first impression.
+          </p>
+        </div>
+
+        <div class="plans-grid">
+          <article class="plan-card">
+            <span class="tag">Followers</span>
+            <h3>100 Followers</h3>
+            <p class="desc">Small and simple pack for quick profile trust.</p>
+
+            <div class="price">
+              <strong>₹29</strong>
+              <span>/order</span>
+            </div>
+
+            <ul class="items">
+              <li><span class="check">✓</span> 100 followers</li>
+              <li><span class="check">✓</span> Budget-friendly plan</li>
+              <li><span class="check">✓</span> Good for first-time users</li>
+            </ul>
+
+            <a class="order-btn" href="contact.html">Order Now</a>
+          </article>
+
+          <article class="plan-card popular">
+            <span class="popular-tag">Best Pick</span>
+            <span class="tag">Followers</span>
+            <h3>500 Followers</h3>
+            <p class="desc">Balanced follower plan for better profile presence.</p>
+
+            <div class="price">
+              <strong>₹99</strong>
+              <span>/order</span>
+            </div>
+
+            <ul class="items">
+              <li><span class="check">✓</span> 500 followers</li>
+              <li><span class="check">✓</span> Better profile authority</li>
+              <li><span class="check">✓</span> Suitable for creators</li>
+            </ul>
+
+            <a class="order-btn" href="contact.html">Order Now</a>
+          </article>
+
+          <article class="plan-card">
+            <span class="tag">Followers</span>
+            <h3>1K Followers</h3>
+            <p class="desc">Large follower pack for a stronger profile look.</p>
+
+            <div class="price">
+              <strong>₹199</strong>
+              <span>/order</span>
+            </div>
+
+            <ul class="items">
+              <li><span class="check">✓</span> 1K followers</li>
+              <li><span class="check">✓</span> Strong profile trust</li>
+              <li><span class="check">✓</span> Best for growing pages</li>
+            </ul>
+
+            <a class="order-btn" href="contact.html">Order Now</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="likes">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Likes Plans</p>
+            <h2 class="section-title">Boost reel activity</h2>
+          </div>
+          <p class="section-text">
+            Like-only plans for reels that need visible engagement support.
+          </p>
+        </div>
+
+        <div class="plans-grid">
+          <article class="plan-card">
+            <span class="tag">Likes</span>
+            <h3>100 Likes</h3>
+            <p class="desc">Quick like support for one reel or post.</p>
+
+            <div class="price">
+              <strong>₹19</strong>
+              <span>/order</span>
+            </div>
+
+            <ul class="items">
+              <li><span class="check">✓</span> 100 likes</li>
+              <li><span class="check">✓</span> Great for testing</li>
+              <li><span class="check">✓</span> Clean engagement support</li>
+            </ul>
+
+            <a class="order-btn" href="contact.html">Order Now</a>
+          </article>
+
+          <article class="plan-card">
+            <span class="tag">Likes</span>
+            <h3>500 Likes</h3>
+            <p class="desc">A strong like pack for better reel presentation.</p>
+
+            <div class="price">
+              <strong>₹69</strong>
+              <span>/order</span>
+            </div>
+
+            <ul class="items">
+              <li><span class="check">✓</span> 500 likes</li>
+              <li><span class="check">✓</span> Better reel activity look</li>
+              <li><span class="check">✓</span> Good for creators</li>
+            </ul>
+
+            <a class="order-btn" href="contact.html">Order Now</a>
+          </article>
+
+          <article class="plan-card popular">
+            <span class="popular-tag">Best Value</span>
+            <span class="tag">Likes</span>
+            <h3>1K Likes</h3>
+            <p class="desc">Best value like plan for stronger reel activity.</p>
+
+            <div class="price">
+              <strong>₹99</strong>
+              <span>/order</span>
+            </div>
+
+            <ul class="items">
+              <li><span class="check">✓</span> 1K likes</li>
+              <li><span class="check">✓</span> Premium reel presentation</li>
+              <li><span class="check">✓</span> Best for important reels</li>
+            </ul>
+
+            <a class="order-btn" href="contact.html">Order Now</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="comments">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Comments Plans</p>
+            <h2 class="section-title">Make reels look active</h2>
+          </div>
+          <p class="section-text">
+            Comment-only packages for better activity and social proof on content.
+          </p>
+        </div>
+
+        <div class="plans-grid">
+          <article class="plan-card">
+            <span class="tag">Comments</span>
+            <h3>10 Comments</h3>
+            <p class="desc">Small comments plan for quick engagement support.</p>
+
+            <div class="price">
+              <strong>₹19</strong>
+              <span>/order</span>
+            </div>
+
+            <ul class="items">
+              <li><span class="check">✓</span> 10 comments</li>
+              <li><span class="check">✓</span> Good for simple reels</li>
+              <li><span class="check">✓</span> Budget-friendly option</li>
+            </ul>
+
+            <a class="order-btn" href="contact.html">Order Now</a>
+          </article>
+
+          <article class="plan-card popular">
+            <span class="popular-tag">Popular</span>
+            <span class="tag">Comments</span>
+            <h3>50 Comments</h3>
+            <p class="desc">Balanced comment plan for better reel activity.</p>
+
+            <div class="price">
+              <strong>₹49</strong>
+              <span>/order</span>
+            </div>
+
+            <ul class="items">
+              <li><span class="check">✓</span> 50 comments</li>
+              <li><span class="check">✓</span> Better content activity</li>
+              <li><span class="check">✓</span> Best for regular creators</li>
+            </ul>
+
+            <a class="order-btn" href="contact.html">Order Now</a>
+          </article>
+
+          <article class="plan-card">
+            <span class="tag">Comments</span>
+            <h3>100 Comments</h3>
+            <p class="desc">High comment support for important reels.</p>
+
+            <div class="price">
+              <strong>₹99</strong>
+              <span>/order</span>
+            </div>
+
+            <ul class="items">
+              <li><span class="check">✓</span> 100 comments</li>
+              <li><span class="check">✓</span> Strong activity look</li>
+              <li><span class="check">✓</span> Best for campaign reels</li>
+            </ul>
+
+            <a class="order-btn" href="contact.html">Order Now</a>
+          </article>
+        </div>
+
+        <div class="note-box">
+          <strong>Note:</strong> Click any Order Now button, fill your Instagram username, selected plan, name, phone number, and Gmail. Our team will contact you after submission.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const quickButtons = document.querySelectorAll(".quick-btn");
+
+    quickButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        quickButtons.forEach((btn) => btn.classList.remove("active"));
+        button.classList.add("active");
+      });
+    });
+
+    const sections = document.querySelectorAll("section[id]");
+
+    window.addEventListener("scroll", () => {
+      let currentSection = "";
+
+      sections.forEach((section) => {
+        const sectionTop = section.offsetTop - 160;
+
+        if (window.scrollY >= sectionTop) {
+          currentSection = section.getAttribute("id");
+        }
+      });
+
+      quickButtons.forEach((button) => {
+        button.classList.remove("active");
+
+        if (button.getAttribute("href") === "#" + currentSection) {
+          button.classList.add("active");
+        }
+      });
+    });
+  </script>
+</body>
+</html>
